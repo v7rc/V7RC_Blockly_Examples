@@ -1,0 +1,95 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="Number" id="aQ5|AkbAQjh_b?Bd~E@t">current_attitude_x</variable>
+    <variable type="Number" id="+0T6IAZz0V|6S?4PU:PV">current_attitude_y</variable>
+    <variable type="Number" id="6Lm9[-*NeMaz+Fzj4V!K">current_attitude_z</variable>
+    <variable type="Number" id="o3RO1rC}~7G7%VA37/qm">current_attitude_w</variable>
+    <variable id="$|Nw/OMlq^N$8R0atSp*">myTextVar</variable>
+  </variables>
+  <block type="v7rc_setup" id="|=w;;3lr3y:tK)s4ge]8" x="-437" y="-531">
+    <statement name="statement">
+      <block type="v7rc_control_channels_thread" id="^U0B+]WrT?9z5aD*c[|,">
+        <field name="BOOL">FALSE</field>
+        <next>
+          <block type="v7rc_enable_gyro_sensors" id="Wf]wAtzqAx?gWg51m/^^">
+            <field name="status">1</field>
+            <next>
+              <block type="variables_set" id="Dk2JEAM;s$@RTty}}]%D" inline="true">
+                <field name="VAR" id="$|Nw/OMlq^N$8R0atSp*">myTextVar</field>
+                <value name="VALUE">
+                  <block type="text" id="u5}}thmNewGTNZ~?m:9[">
+                    <field name="TEXT"></field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="loopProcess" id="t|cuVwWxbhm-_x[ib|e!" x="-414" y="-343">
+    <statement name="statement">
+      <block type="v7rc_attitude_value" id="BplpHe[t~pH|x{P$E=R^">
+        <next>
+          <block type="variables_set" id="A!;A-T}TlU8KR76)toMG" inline="true">
+            <field name="VAR" id="$|Nw/OMlq^N$8R0atSp*">myTextVar</field>
+            <value name="VALUE">
+              <block type="text_join" id="6-}_b^oT.MlH4I2iz*iS">
+                <mutation items="6"></mutation>
+                <value name="ADD0">
+                  <block type="text" id="VU/NNW5nNHnLO3204U6N">
+                    <field name="TEXT">X:</field>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="variables_get" id="uQWq;V`[td+S-dOJ5b+*" inline="true">
+                    <field name="VAR" id="aQ5|AkbAQjh_b?Bd~E@t" variabletype="Number">current_attitude_x</field>
+                  </block>
+                </value>
+                <value name="ADD2">
+                  <block type="text" id="17JMpt*fFHv%IcmlXG;P">
+                    <field name="TEXT">Y:</field>
+                  </block>
+                </value>
+                <value name="ADD3">
+                  <block type="variables_get" id="Ass(d;O21a`Ui^ya?3q;" inline="true">
+                    <field name="VAR" id="+0T6IAZz0V|6S?4PU:PV" variabletype="Number">current_attitude_y</field>
+                  </block>
+                </value>
+                <value name="ADD4">
+                  <block type="text" id="n`+(DoZ!0.XXVdV#ndhv">
+                    <field name="TEXT">Z: </field>
+                  </block>
+                </value>
+                <value name="ADD5">
+                  <block type="variables_get" id="^3yDj[Bp~(?y;:+WySmW" inline="true">
+                    <field name="VAR" id="6Lm9[-*NeMaz+Fzj4V!K" variabletype="Number">current_attitude_z</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="v7rc_set_notice" id="*U3T#)P6]jbMEA[Jfv~u">
+                <value name="NOTICETEXT">
+                  <block type="variables_get" id="(TT}9^cw`R};?mp@!qCG" inline="true">
+                    <field name="VAR" id="$|Nw/OMlq^N$8R0atSp*">myTextVar</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_delay" id="IO~=#c5Ww0!QNwh.nn:Y">
+                    <value name="DELAYTIME">
+                      <block type="math_number" id="_qVoKzE$V2n^O(7BtV^0">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

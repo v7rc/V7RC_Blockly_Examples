@@ -1,0 +1,96 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="Number" id=")WebjwnJLsa.9vd.TwW7">current_gps_lat</variable>
+    <variable type="Number" id="lv/vuVD)rWKT1;q^:2;(">current_gps_lng</variable>
+    <variable id="$|Nw/OMlq^N$8R0atSp*">myTextVar</variable>
+  </variables>
+  <block type="v7rc_setup" id="|=w;;3lr3y:tK)s4ge]8" x="-391" y="-329">
+    <statement name="statement">
+      <block type="v7rc_control_channels_thread" id="^U0B+]WrT?9z5aD*c[|,">
+        <field name="BOOL">FALSE</field>
+        <next>
+          <block type="v7rc_enable_gyro_sensors" id="PREzhKT97^wR=6{RJGU-">
+            <field name="status">1</field>
+            <next>
+              <block type="v7rc_enable_gps_sensors" id="T?~+r3/uE3?$o5zaPCw9">
+                <field name="status">1</field>
+                <next>
+                  <block type="v7rc_gps_value" id="RqBkFV`as4qb(bv+u}{q">
+                    <field name="-1" id=")WebjwnJLsa.9vd.TwW7" variabletype="Number">current_gps_lat</field>
+                    <field name="-1" id="lv/vuVD)rWKT1;q^:2;(" variabletype="Number">current_gps_lng</field>
+                    <next>
+                      <block type="variables_set" id="Dk2JEAM;s$@RTty}}]%D" inline="true">
+                        <field name="VAR" id="$|Nw/OMlq^N$8R0atSp*">myTextVar</field>
+                        <value name="VALUE">
+                          <block type="text" id="u5}}thmNewGTNZ~?m:9[">
+                            <field name="TEXT"></field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="loopProcess" id="t|cuVwWxbhm-_x[ib|e!" x="75" y="-348">
+    <statement name="statement">
+      <block type="v7rc_gps_value" id="`P1qVDCl*sl+QILBkM6{">
+        <field name="-1" id=")WebjwnJLsa.9vd.TwW7" variabletype="Number">current_gps_lat</field>
+        <field name="-1" id="lv/vuVD)rWKT1;q^:2;(" variabletype="Number">current_gps_lng</field>
+        <next>
+          <block type="variables_set" id="A!;A-T}TlU8KR76)toMG" inline="true">
+            <field name="VAR" id="$|Nw/OMlq^N$8R0atSp*">myTextVar</field>
+            <value name="VALUE">
+              <block type="text_join" id="6-}_b^oT.MlH4I2iz*iS">
+                <mutation items="4"></mutation>
+                <value name="ADD0">
+                  <block type="text" id="VU/NNW5nNHnLO3204U6N">
+                    <field name="TEXT">緯度：</field>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="variables_get" id="uQWq;V`[td+S-dOJ5b+*" inline="true">
+                    <field name="VAR" id=")WebjwnJLsa.9vd.TwW7" variabletype="Number">current_gps_lat</field>
+                  </block>
+                </value>
+                <value name="ADD2">
+                  <block type="text" id="17JMpt*fFHv%IcmlXG;P">
+                    <field name="TEXT">經度：</field>
+                  </block>
+                </value>
+                <value name="ADD3">
+                  <block type="variables_get" id="Ass(d;O21a`Ui^ya?3q;" inline="true">
+                    <field name="VAR" id="lv/vuVD)rWKT1;q^:2;(" variabletype="Number">current_gps_lng</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="v7rc_set_notice" id="*U3T#)P6]jbMEA[Jfv~u">
+                <value name="NOTICETEXT">
+                  <block type="variables_get" id="(TT}9^cw`R};?mp@!qCG" inline="true">
+                    <field name="VAR" id="$|Nw/OMlq^N$8R0atSp*">myTextVar</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_delay" id="IO~=#c5Ww0!QNwh.nn:Y">
+                    <value name="DELAYTIME">
+                      <block type="math_number" id="_qVoKzE$V2n^O(7BtV^0">
+                        <field name="NUM">1000</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

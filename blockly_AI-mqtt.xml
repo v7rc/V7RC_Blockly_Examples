@@ -1,0 +1,140 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="String" id="hGXH:Vo!9nm.c$5z^oCf">aiData</variable>
+    <variable id="z./?D@atze*#pAJP5`AC">mqtt_server_url</variable>
+    <variable id="NtR_qf%GD4KR-o+JRVT4">mqtt_topic_ai</variable>
+    <variable id="^/]n[X*,o)$],smwj7,l">mqtt_user_name</variable>
+    <variable id="Bm-A$j2`(o++3o:pX72A">mqtt_user_password</variable>
+    <variable id="!_}+Vf#xvpG/9EL@1Fj`">mqtt_port</variable>
+  </variables>
+  <block type="v7rc_setup" id="^g=rxM+Es?M~2DlG[t`@" x="65" y="32">
+    <statement name="statement">
+      <block type="v7rc_controlMode" id="M^Y[GW]7n@ea9.^rKG3J">
+        <value name="VALUE">
+          <block type="constant_controlMode_default" id="GSt1AK0k/spCd3yz#{/P"></block>
+        </value>
+        <next>
+          <block type="variables_set" id="xgfhlI!-krk2!j*:K;,?" inline="true">
+            <field name="VAR" id="z./?D@atze*#pAJP5`AC">mqtt_server_url</field>
+            <value name="VALUE">
+              <block type="text" id="j525TP5qCq#a#HU#w]ad">
+                <field name="TEXT">7a2b03b0eec54208a7e87cf9ca9670f7.s1.eu.hivemq.cloud</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="mXM`7wFOa;Kb=tU#MyRi" inline="true">
+                <field name="VAR" id="^/]n[X*,o)$],smwj7,l">mqtt_user_name</field>
+                <value name="VALUE">
+                  <block type="text" id="!?kXAD~DYJmcn25`RY|H">
+                    <field name="TEXT">hivemq.webclient.1726366680504</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="]WA7VAHnEy,uP`wm,j%Q" inline="true">
+                    <field name="VAR" id="Bm-A$j2`(o++3o:pX72A">mqtt_user_password</field>
+                    <value name="VALUE">
+                      <block type="text" id="De.aMfeaGaO)p_(6#oTK">
+                        <field name="TEXT">94$1yo%3*Gl.xQhbZHWY</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="3Hbeh_w:D0R!T}~VnsHw" inline="true">
+                        <field name="VAR" id="!_}+Vf#xvpG/9EL@1Fj`">mqtt_port</field>
+                        <value name="VALUE">
+                          <block type="math_number" id="k6Zx?J.?U;|=_J%E3p4X">
+                            <field name="NUM">8884</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="v7rc_set_MQTT_server" id="(P$I}!xZav?FGm)QN3|H">
+                            <field name="TYPE">WSS</field>
+                            <value name="serverIP">
+                              <block type="variables_get" id="W!CQA8%*-IrQ/ZY~.5=L" inline="true">
+                                <field name="VAR" id="z./?D@atze*#pAJP5`AC">mqtt_server_url</field>
+                              </block>
+                            </value>
+                            <value name="port">
+                              <block type="variables_get" id="L_w6xCcMKiuVu2DL./Hy" inline="true">
+                                <field name="VAR" id="!_}+Vf#xvpG/9EL@1Fj`">mqtt_port</field>
+                              </block>
+                            </value>
+                            <value name="userName">
+                              <block type="variables_get" id="R|`XNgg{@0S2}y{CYPx+" inline="true">
+                                <field name="VAR" id="^/]n[X*,o)$],smwj7,l">mqtt_user_name</field>
+                              </block>
+                            </value>
+                            <value name="password">
+                              <block type="variables_get" id="(by,3D$Q7lt$baWmeEQs" inline="true">
+                                <field name="VAR" id="Bm-A$j2`(o++3o:pX72A">mqtt_user_password</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id=",28;Wc8]0e7zDZ-I-KvY" inline="true">
+                                <field name="VAR" id="NtR_qf%GD4KR-o+JRVT4">mqtt_topic_ai</field>
+                                <value name="VALUE">
+                                  <block type="text" id="1yuw%]o$7kyc@f?F4U0[">
+                                    <field name="TEXT">AIMessage</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="v7rc_control_channels_thread" id="SLtWch8`6pu]VQG}ODGj">
+                                    <field name="BOOL">FALSE</field>
+                                    <next>
+                                      <block type="v7rc_delay" id="39PRC~?DXsCMRr.=KfjH">
+                                        <value name="DELAYTIME">
+                                          <block type="math_number" id="=,K_!uc(c:wa7uGL`=hf">
+                                            <field name="NUM">3000</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="v7rc_mqtt_publish_message" id="Vdi|fHK?+xRVkV5C`u2[">
+                                            <value name="topic">
+                                              <block type="variables_get" id="ej+GkJt#%SE9m*]3(Gl." inline="true">
+                                                <field name="VAR" id="NtR_qf%GD4KR-o+JRVT4">mqtt_topic_ai</field>
+                                              </block>
+                                            </value>
+                                            <value name="message">
+                                              <block type="text" id="7Z6jQ4eD7HziWZIFtllh">
+                                                <field name="TEXT">Everything is ready</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_receive_ai_data" id="8CzMD|B+a}-N}ncA0sH~" x="95" y="490">
+    <field name="1" id="hGXH:Vo!9nm.c$5z^oCf" variabletype="String">aiData</field>
+    <statement name="statement">
+      <block type="v7rc_mqtt_publish_message" id="E8kclmZZ-qL/qi@e}ttG">
+        <value name="topic">
+          <block type="variables_get" id="W(xY1GwNUnM*VUO)ubiS" inline="true">
+            <field name="VAR" id="NtR_qf%GD4KR-o+JRVT4">mqtt_topic_ai</field>
+          </block>
+        </value>
+        <value name="message">
+          <block type="variables_get" id="FU@XkSG{:tQQ,#kLM.%v" inline="true">
+            <field name="VAR" id="hGXH:Vo!9nm.c$5z^oCf" variabletype="String">aiData</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="loopProcess" id="PJtsdSrlUC_mH|0rG68/" x="52" y="691"></block>
+</xml>

@@ -1,0 +1,500 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="String" id="F^`hpB,-iOs%P6]D9P-h">voiceText</variable>
+    <variable type="Number" id="s~YwT@}]a};RkQfKo)uJ">button_type</variable>
+    <variable type="Number" id="u|3A6/aUh:eNM9o13EFZ">button_id</variable>
+    <variable type="Number" id="CT7M]laQ/N):@KG7]2{h">button_value</variable>
+    <variable type="String" id="eFY0oJYd:YOa!U{]71Y!">llm_feedback</variable>
+    <variable id="QgWWsgm~?mSV/{`aN+f6">myContent</variable>
+    <variable id="KSn0}N~=*#lx*b92E3WH">IfThinking</variable>
+    <variable id="dYv=MV|Eva8(OiGYn=r2">CountProcess</variable>
+    <variable id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</variable>
+  </variables>
+  <block type="v7rc_setup" id="|=w;;3lr3y:tK)s4ge]8" x="-391" y="-329">
+    <statement name="statement">
+      <block type="v7rc_control_channels_thread" id="^U0B+]WrT?9z5aD*c[|,">
+        <field name="BOOL">FALSE</field>
+        <next>
+          <block type="variables_set" id="fafd+=KNhlDiPb)?+z2X">
+            <field name="VAR" id="QgWWsgm~?mSV/{`aN+f6">myContent</field>
+            <value name="VALUE">
+              <block type="text" id="Nl`?b]Pxffz{=QVEpH`.">
+                <field name="TEXT"></field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="Xs{7z$4*+|=xVV8^J|2(">
+                <field name="VAR" id="KSn0}N~=*#lx*b92E3WH">IfThinking</field>
+                <value name="VALUE">
+                  <block type="math_number" id="GRtE4u+=QH`3ff=;z(8y">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="%=j{],]094n}Zb_qWfP(">
+                    <field name="VAR" id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</field>
+                    <value name="VALUE">
+                      <block type="math_number" id=";1EmC[:MZu%j~,_4w2UF">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="23er,AoZrCE0j~OAxL7o">
+                        <field name="VAR" id="dYv=MV|Eva8(OiGYn=r2">CountProcess</field>
+                        <value name="VALUE">
+                          <block type="math_number" id="t6$RX|d_[F^7}.#FV`Z@">
+                            <field name="NUM">0</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_receive_voice_to_text" id="|Uc:C0Rqg:4Wdz_$Oc:=" x="156" y="-210">
+    <field name="1" id="F^`hpB,-iOs%P6]D9P-h" variabletype="String">voiceText</field>
+    <statement name="statement">
+      <block type="controls_if" id="pV*Yx%(d3EA!!EUOk|50">
+        <value name="IF0">
+          <block type="logic_compare" id="+L!s:/JkN1C#H51rpoFs">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="variables_get" id="NtI;3R9Mf;+cpPc0x_kN">
+                <field name="VAR" id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="0RApJ)eqtM7ie8}g?x}.">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="v7rc_set_notice" id="ZezI@`2CkZTbTF1(OJEn">
+            <value name="NOTICETEXT">
+              <block type="text" id=".n`-1!36/vk}Wh,}.:F#">
+                <field name="TEXT">你剛剛說了一句話，我聽起來像是</field>
+              </block>
+            </value>
+            <next>
+              <block type="v7rc_delay" id="AMEfcytUb;6[ruy/J/ia">
+                <value name="DELAYTIME">
+                  <block type="math_number" id="lN|OuZpqge;ggdd~fg`z">
+                    <field name="NUM">2000</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_set_notice" id="07cEKTb+~c`XFp/$U*J[">
+                    <value name="NOTICETEXT">
+                      <block type="variables_get" id="4]iZ?k8GhxZGBlZR|]yp">
+                        <field name="VAR" id="F^`hpB,-iOs%P6]D9P-h" variabletype="String">voiceText</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="v7rc_delay" id="2C/CL0%a^fSgyxiH:J{!">
+                        <value name="DELAYTIME">
+                          <block type="math_number" id="Ml4RWhsVSW?MSm}mQOvc">
+                            <field name="NUM">5000</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="v7rc_set_notice" id="=;}}855+aral=VSca1pB">
+                            <value name="NOTICETEXT">
+                              <block type="text" id="uqEuX~i3?U*kt_fnqR)H">
+                                <field name="TEXT">現在開始進行LLM處理</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="KqLUIbiB`OV=XCvPYZi5">
+                                <field name="VAR" id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</field>
+                                <value name="VALUE">
+                                  <block type="math_number" id="Iyg_::~~q4*C*TB6q`j%">
+                                    <field name="NUM">1</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="variables_set" id="3=sn6=G^_6W|om=q62P@">
+                                    <field name="VAR" id="dYv=MV|Eva8(OiGYn=r2">CountProcess</field>
+                                    <value name="VALUE">
+                                      <block type="math_number" id="kL[s2Gm.E-g(8nQdAaNl">
+                                        <field name="NUM">0</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set" id="$c%OY1%G+OWw{sebsi`D">
+                                        <field name="VAR" id="KSn0}N~=*#lx*b92E3WH">IfThinking</field>
+                                        <value name="VALUE">
+                                          <block type="math_number" id="(M|;^nb1W;jpw6h%vrL!">
+                                            <field name="NUM">1</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="v7rc_llm_request" id=":Yr;@V]YK8oSrJ,wcTCs">
+                                            <value name="content">
+                                              <block type="variables_get" id="^`{w]BcyFfB7l,o=dq.(">
+                                                <field name="VAR" id="F^`hpB,-iOs%P6]D9P-h" variabletype="String">voiceText</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_override_set_button_value" id="6i3F6FE42U5.x)p9$pHY" x="-353" y="-103">
+    <field name="-1" id="s~YwT@}]a};RkQfKo)uJ" variabletype="Number">button_type</field>
+    <field name="-1" id="u|3A6/aUh:eNM9o13EFZ" variabletype="Number">button_id</field>
+    <field name="-1" id="CT7M]laQ/N):@KG7]2{h" variabletype="Number">button_value</field>
+    <statement name="DO">
+      <block type="controls_if" id=".u@sG}{a:X{?9_#!Pfvy">
+        <value name="IF0">
+          <block type="logic_compare" id="dExWRv0T7Zf[C+,M`)DU">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="variables_get" id="E{d*zS,4|%a_Ygdrn4ni">
+                <field name="VAR" id="u|3A6/aUh:eNM9o13EFZ" variabletype="Number">button_id</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="CiHc7w|1nq8v;W`0mT_N">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="v7rc_set_notice" id="(aqM%l_*XfNz9CMdqrYr">
+            <value name="NOTICETEXT">
+              <block type="text" id="TF(w4v!BpdOZO4/`[S!/">
+                <field name="TEXT">我現在要展示離線版本LLM的AI功能</field>
+              </block>
+            </value>
+            <next>
+              <block type="v7rc_delay" id="?I1CdwdidMGB-?C$T(S;">
+                <value name="DELAYTIME">
+                  <block type="math_number" id="qrzj@9|2,ou^Y%%JcVQH">
+                    <field name="NUM">2000</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_set_notice" id="CJLpD/G;F)lyyka7Vw~O">
+                    <value name="NOTICETEXT">
+                      <block type="text" id="^#BE4m:ql:H(?Iu.oG.+">
+                        <field name="TEXT">啟動離線版本LLM</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="v7rc_llm_enable" id="w$27%ZJe?P~R],_(|IF-">
+                        <next>
+                          <block type="v7rc_delay" id="/ui@i$w!1SDY.gMn09e0">
+                            <value name="DELAYTIME">
+                              <block type="math_number" id="1|gNvG9mPV:ALQ,[zOKk">
+                                <field name="NUM">2000</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="v7rc_set_notice" id="*WGt`K,jJ7oSZ$][{Zsh">
+                                <value name="NOTICETEXT">
+                                  <block type="text" id="`3{lr9DLf{y9pe}ibZ3:">
+                                    <field name="TEXT">我把AI設定成家教老師</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="v7rc_delay" id="w8ga6p.b2r(uwxi%SZ7)">
+                                    <value name="DELAYTIME">
+                                      <block type="math_number" id="B)!^xk_M0R89K8%v@.}m">
+                                        <field name="NUM">2000</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="v7rc_set_notice" id="^()k{AW%Fu$5?Ho`l7i(">
+                                        <value name="NOTICETEXT">
+                                          <block type="text" id="h7Idxa[xN,T-!!a{c;aH">
+                                            <field name="TEXT">我將Prompt設定為「你是我的私人助理」</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="v7rc_delay" id="]h{^0hpH}Ma.5geXD7bP">
+                                            <value name="DELAYTIME">
+                                              <block type="math_number" id="e]_.d,m93/:=_$wuEl$Y">
+                                                <field name="NUM">2000</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="v7rc_llm_set_system_prompt" id="h:MkjTB_X,f4s2s%_bKq">
+                                                <value name="content">
+                                                  <block type="text" id="~qU4TwC{t94eRh7mEcf%">
+                                                    <field name="TEXT">你是我的私人助理，你會非常簡潔扼要地回答我的問題</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="v7rc_set_notice" id="Z`b@ht5Vum0XWmrbOW89">
+                                                    <value name="NOTICETEXT">
+                                                      <block type="text" id="I2}5uyOEE388G|a)60Br">
+                                                        <field name="TEXT">現在可以開始問問題了, 請使用麥克風詢問問題</field>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="v7rc_delay" id="e@pl4tv[)WCO|4{.N4rU">
+                                                        <value name="DELAYTIME">
+                                                          <block type="math_number" id="3hT;*.4$r=fS+|Y/|4VR">
+                                                            <field name="NUM">2000</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_llm_assistant_feedback" id="3euW!s7bA^1z+@@i=vYT" x="460" y="156">
+    <statement name="DO">
+      <block type="variables_set" id="DW,4C{jF2GIBQ=1,Aw?#">
+        <field name="VAR" id="QgWWsgm~?mSV/{`aN+f6">myContent</field>
+        <value name="VALUE">
+          <block type="variables_get" id="u:s,0,CYbAkZ-aw?_N`r">
+            <field name="VAR" id="eFY0oJYd:YOa!U{]71Y!" variabletype="String">llm_feedback</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="SYs4ORgmt*a@(5,|Xp7=">
+            <field name="VAR" id="KSn0}N~=*#lx*b92E3WH">IfThinking</field>
+            <value name="VALUE">
+              <block type="math_number" id="~t|u=C4wnsbpbL*(Mw.Z">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="loopProcess" id="T?@(|wGexN/2vHcVO`b7" x="-374" y="379">
+    <statement name="statement">
+      <block type="controls_if" id="D8`5zmT,.RKqO2(aN)7w">
+        <mutation elseif="1"></mutation>
+        <value name="IF0">
+          <block type="logic_operation" id="Hnq}vO=k~$e6YxA*n+{c">
+            <field name="OP">AND</field>
+            <value name="A">
+              <block type="logic_compare" id="1IkV^154$7)Nv-MxaOq%">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="ja4Gz*^-aRqzVXv50mGh">
+                    <field name="VAR" id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="N`2.}K=CP_AT3iCo{+{t">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare" id="2@nMg?2hvyv%!AzWj8/4">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id=":#0Su/Fe^wZTbW12gW+m">
+                    <field name="VAR" id="KSn0}N~=*#lx*b92E3WH">IfThinking</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="uqq2i.V@NJldDfH8}2:S">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="math_change" id="}tD_4n~NFPy8;XU:HsKe">
+            <field name="VAR" id="dYv=MV|Eva8(OiGYn=r2">CountProcess</field>
+            <value name="DELTA">
+              <shadow type="math_number" id="@X8:]+(jWyL{eM~ol,(o">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="v7rc_set_notice" id="TEkN,2JhHYwrMVz_gwb8">
+                <value name="NOTICETEXT">
+                  <block type="text_join" id="1s-)%DTY}kHclb#5B|YU">
+                    <mutation items="2"></mutation>
+                    <value name="ADD0">
+                      <block type="text" id="D;2s.Gv+NfUgtH{pt@PA">
+                        <field name="TEXT">目前正在生成結果，整理成語音文字...</field>
+                      </block>
+                    </value>
+                    <value name="ADD1">
+                      <block type="v7rc_number_to_text" id="_xbXUfG8$fM6-tSW(^%E">
+                        <value name="NUMBER">
+                          <block type="variables_get" id="7G0ar60hyN0=!Crm~Ams">
+                            <field name="VAR" id="dYv=MV|Eva8(OiGYn=r2">CountProcess</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="?1Qj!LK4,h^hOS3+Aqr=">
+                    <field name="VAR" id="KSn0}N~=*#lx*b92E3WH">IfThinking</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="w6q2Q]}2C-Va3@{Cp_Lz">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <value name="IF1">
+          <block type="logic_operation" id="93Qz7F3y%v_-|:@LN1KL">
+            <field name="OP">AND</field>
+            <value name="A">
+              <block type="logic_compare" id="tEeAGoRqW6n4S,cUv+nQ">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="R)BNzb=*^*W!I+GXVxm3">
+                    <field name="VAR" id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="19lrT(0]zF,v5~6KJxhe">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare" id="ij$?lv`CAPl4IqvGVRy)">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="P23fTQjPc-zz=hmBIZHl">
+                    <field name="VAR" id="KSn0}N~=*#lx*b92E3WH">IfThinking</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="0llWp9KKeH/91-pgp+76">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO1">
+          <block type="v7rc_set_notice" id="lNZxKzRszKuIGga|j{4y">
+            <value name="NOTICETEXT">
+              <block type="text" id="8@Z7Gl0;,M0/[cFg7]RJ">
+                <field name="TEXT">生成完成，以下是結果</field>
+              </block>
+            </value>
+            <next>
+              <block type="v7rc_delay" id="~oz#8*KiRs%I};:Us.^k">
+                <value name="DELAYTIME">
+                  <block type="math_number" id="Qq60P8`HMtf*yI6WH`9L">
+                    <field name="NUM">2000</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_play_text_to_voice" id="valCi_DKFU}b@7ws[=LM">
+                    <value name="VALUE">
+                      <block type="variables_get" id="V/Lei|zx7Q%3_cUS@hg3">
+                        <field name="VAR" id="QgWWsgm~?mSV/{`aN+f6">myContent</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="v7rc_set_notice" id="h*gzjHM]6k;okx~(cgRp">
+                        <value name="NOTICETEXT">
+                          <block type="variables_get" id="mT|z1C}nU]c_y@K(JEw@">
+                            <field name="VAR" id="QgWWsgm~?mSV/{`aN+f6">myContent</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="/.)19U/AGxq@R^,?^pi`">
+                            <field name="VAR" id="uRrx.E+o!MmscV5_LgF0">IfProcessAI</field>
+                            <value name="VALUE">
+                              <block type="math_number" id="9V^v5e0_i|zlFx:GeK($">
+                                <field name="NUM">0</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="^M7Cn8?_/C$:p!X9Kl8i">
+                                <field name="VAR" id="dYv=MV|Eva8(OiGYn=r2">CountProcess</field>
+                                <value name="VALUE">
+                                  <block type="math_number" id="YlXu(9;5*LM1R]-H]Qze">
+                                    <field name="NUM">0</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <next>
+          <block type="v7rc_delay" id="]Bl2?%hCFj3rjk(T6e?B">
+            <value name="DELAYTIME">
+              <block type="math_number" id="g|sp!ea]QS?3z}f50Wa|">
+                <field name="NUM">2000</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
