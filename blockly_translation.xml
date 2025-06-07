@@ -1,0 +1,163 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="String" id="F^`hpB,-iOs%P6]D9P-h">voiceText</variable>
+    <variable type="String" id="eFY0oJYd:YOa!U{]71Y!">llm_feedback</variable>
+    <variable id="!LmLM!`fKe@n?!9_xJE7">isGetVoice</variable>
+    <variable id="r`Ppr-:gI|7:d7r^_NL,">isProcessAI</variable>
+    <variable id="t:lk{UiB~9)C~ZVErmJ6">tempText</variable>
+  </variables>
+  <block type="v7rc_setup" id="|=w;;3lr3y:tK)s4ge]8" x="-391" y="-329">
+    <statement name="statement">
+      <block type="v7rc_control_channels_thread" id="^U0B+]WrT?9z5aD*c[|,">
+        <field name="BOOL">FALSE</field>
+        <next>
+          <block type="variables_set" id="4NW9g7wFswvd;?/4]vWF">
+            <field name="VAR" id="r`Ppr-:gI|7:d7r^_NL,">isProcessAI</field>
+            <value name="VALUE">
+              <block type="math_number" id="IO8Pd~sw6)eE}a9Q@D$X">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="rb1W?b3BO94=P^K#O]AN">
+                <field name="VAR" id="!LmLM!`fKe@n?!9_xJE7">isGetVoice</field>
+                <value name="VALUE">
+                  <block type="math_number" id="jy0+Yaz{`s#6S]AXBoVO">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_llm_enable" id="5X$?WnFP/./8l4vEbfXq"></block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="loopProcess" id="Y5f8gZYu#mi|8F2^g,]P" x="-21" y="-255">
+    <statement name="statement">
+      <block type="controls_if" id="TcP{v8`Lw`R{r1bL5x-G">
+        <value name="IF0">
+          <block type="logic_operation" id="?v0-El%;.QD_7j}q}u85">
+            <field name="OP">AND</field>
+            <value name="A">
+              <block type="logic_compare" id="w;|9CxZVuK4~*l!2S%,L">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="xo3weH?Os74=GAj6}Q{.">
+                    <field name="VAR" id="r`Ppr-:gI|7:d7r^_NL,">isProcessAI</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="q16-Un;0{~s#EuwK*9M`">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare" id="(4Eq41fOCQ;)PL_Q{=A_">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="}9ndjhLe]tGI`{c{2bPD">
+                    <field name="VAR" id="!LmLM!`fKe@n?!9_xJE7">isGetVoice</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="xx5HaJa:hLStLBu!y-(]">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="v7rc_llm_request" id="@=K4U?,~h_t8f_d}d@)8">
+            <value name="content">
+              <block type="text_join" id=".PD*~Cpw%nB:`L1cFFd.">
+                <mutation items="2"></mutation>
+                <value name="ADD0">
+                  <block type="text" id="i*wM!WgX}t$yQ[6EvF!9">
+                    <field name="TEXT">只需要幫我將以下文字翻譯成英文，不做任何解釋或評論： </field>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="variables_get" id="z+v$DCRU,#X}=Y`qZ/i[">
+                    <field name="VAR" id="t:lk{UiB~9)C~ZVErmJ6">tempText</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="F1v$ujP^z4a;veP#j(C-">
+                <field name="VAR" id="!LmLM!`fKe@n?!9_xJE7">isGetVoice</field>
+                <value name="VALUE">
+                  <block type="math_number" id="_NGF0Mt}K*c;aLU)jIjJ">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="u=y#B(tx.^rGK]B_J#OJ">
+                    <field name="VAR" id="r`Ppr-:gI|7:d7r^_NL,">isProcessAI</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="+9a{B1+SW`1!xu]co,OP">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_receive_voice_to_text" id="XcY$1M8XFZ=O3I*aga-H" x="-385" y="-116">
+    <field name="1" id="F^`hpB,-iOs%P6]D9P-h" variabletype="String">voiceText</field>
+    <statement name="statement">
+      <block type="variables_set" id="d9/47#9QJEA+WM(}-XpE">
+        <field name="VAR" id="!LmLM!`fKe@n?!9_xJE7">isGetVoice</field>
+        <value name="VALUE">
+          <block type="math_number" id="IWuRan,ww4D^}pzD?/w.">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="#Ha:~.2gU*#D`$Dm[bp3">
+            <field name="VAR" id="t:lk{UiB~9)C~ZVErmJ6">tempText</field>
+            <value name="VALUE">
+              <block type="variables_get" id="%Ac)98Mt0Hr7#T?.M0hc">
+                <field name="VAR" id="F^`hpB,-iOs%P6]D9P-h" variabletype="String">voiceText</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_llm_assistant_feedback" id="Dt~DraxcIV1CITf^n/FE" x="-25" y="37">
+    <statement name="DO">
+      <block type="v7rc_set_notice" id="U$^Mpqc/H*Wtwkia,$Ey">
+        <value name="NOTICETEXT">
+          <block type="variables_get" id="])^I9GCNV=Ei5-3$*kK|">
+            <field name="VAR" id="eFY0oJYd:YOa!U{]71Y!" variabletype="String">llm_feedback</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="Pdt]rN0-N-n2z6^X9S78">
+            <field name="VAR" id="r`Ppr-:gI|7:d7r^_NL,">isProcessAI</field>
+            <value name="VALUE">
+              <block type="math_number" id="rvKB}|hvr0GL8E}Cklt$">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
