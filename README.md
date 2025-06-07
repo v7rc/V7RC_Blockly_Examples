@@ -13,3 +13,5 @@
 5. blockly_Gyro.xml： 使用手機的陀螺儀數據
 
 7. blockly_v7rc_lego_racing.xml： V7RC可以控制Legi科技系列車輛。
+
+8. blockly_robot_control.xml: 使用V7RC控制益成老師的機器人。
