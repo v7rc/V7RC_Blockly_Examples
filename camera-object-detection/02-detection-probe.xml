@@ -1,0 +1,400 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="String" id="aiData">aiData</variable>
+    <variable type="String" id="ai-object-id">ai_object_id</variable>
+    <variable type="String" id="ai-object-type">ai_object_type</variable>
+    <variable type="String" id="ai-object-location-x">ai_object_location_x</variable>
+    <variable type="String" id="ai-object-location-y">ai_object_location_y</variable>
+    <variable type="String" id="ai-object-width">ai_object_width</variable>
+    <variable type="String" id="ai-object-height">ai_object_height</variable>
+    <variable type="String" id="ai-object-confidence">ai_object_confidence</variable>
+    <variable type="String" id="ai-qty">ai_qty</variable>
+    <variable id="confidence-tenths">confidence_tenths</variable>
+  </variables>
+  <block type="v7rc_setup" x="32" y="32">
+    <statement name="statement">
+      <block type="v7rc_show_canvas_layer">
+        <value name="LAYERID">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="v7rc_clear_canvas_layer">
+            <value name="LAYERID">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="v7rc_paint_text">
+                <value name="LAYERID">
+                  <shadow type="math_number">
+                    <field name="NUM">1</field>
+                  </shadow>
+                </value>
+                <value name="POINTX">
+                  <shadow type="math_number">
+                    <field name="NUM">30</field>
+                  </shadow>
+                </value>
+                <value name="POINTY">
+                  <shadow type="math_number">
+                    <field name="NUM">40</field>
+                  </shadow>
+                </value>
+                <value name="FONTSIZE">
+                  <shadow type="math_number">
+                    <field name="NUM">22</field>
+                  </shadow>
+                </value>
+                <value name="FILLCOLOR">
+                  <shadow type="text">
+                    <field name="TEXT">#FFDD33</field>
+                  </shadow>
+                </value>
+                <value name="FILLOPACITY">
+                  <shadow type="math_number">
+                    <field name="NUM">1</field>
+                  </shadow>
+                </value>
+                <value name="TEXTVALUE">
+                  <shadow type="text">
+                    <field name="TEXT">Waiting for AI results</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="v7rc_show_canvas_layer">
+                    <value name="LAYERID">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="v7rc_clear_canvas_layer">
+                        <value name="LAYERID">
+                          <shadow type="math_number">
+                            <field name="NUM">0</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="v7rc_camera_enable">
+                            <next>
+                              <block type="v7rc_delay">
+                                <value name="DELAYTIME">
+                                  <shadow type="math_number">
+                                    <field name="NUM">300</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="v7rc_ai_object_detection_enable">
+                                    <field name="MODEL">__none__</field>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_receive_ai_parse_each_item" x="32" y="300">
+    <statement name="statement">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="logic_compare">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="variables_get">
+                <field name="VAR" id="ai-object-id" variabletype="String">ai_object_id</field>
+              </block>
+            </value>
+            <value name="B">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="v7rc_clear_canvas_layer">
+            <value name="LAYERID">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="v7rc_paint_square">
+            <value name="LAYERID">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+            <value name="POINTX">
+              <block type="variables_get">
+                <field name="VAR" id="ai-object-location-x" variabletype="String">ai_object_location_x</field>
+              </block>
+            </value>
+            <value name="POINTY">
+              <block type="variables_get">
+                <field name="VAR" id="ai-object-location-y" variabletype="String">ai_object_location_y</field>
+              </block>
+            </value>
+            <value name="WIDTH">
+              <block type="variables_get">
+                <field name="VAR" id="ai-object-width" variabletype="String">ai_object_width</field>
+              </block>
+            </value>
+            <value name="HEIGHT">
+              <block type="variables_get">
+                <field name="VAR" id="ai-object-height" variabletype="String">ai_object_height</field>
+              </block>
+            </value>
+            <value name="BORDERWIDTH">
+              <shadow type="math_number">
+                <field name="NUM">3</field>
+              </shadow>
+            </value>
+            <value name="BORDERCOLOR">
+              <shadow type="text">
+                <field name="TEXT">#33FF66</field>
+              </shadow>
+            </value>
+            <value name="FILLCOLOR">
+              <shadow type="text">
+                <field name="TEXT">#000000</field>
+              </shadow>
+            </value>
+            <value name="FILLOPACITY">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+            <value name="BORDEROPACITY">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR" id="confidence-tenths">confidence_tenths</field>
+                <value name="VALUE">
+                  <block type="v7rc_math_function">
+                    <field name="TYPE">round</field>
+                    <value name="x">
+                      <block type="math_arithmetic">
+                        <field name="OP">MULTIPLY</field>
+                        <value name="A">
+                          <block type="variables_get">
+                            <field name="VAR" id="ai-object-confidence" variabletype="String">ai_object_confidence</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <shadow type="math_number">
+                            <field name="NUM">1000</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="v7rc_paint_text">
+                    <value name="LAYERID">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                    <value name="POINTX">
+                      <block type="variables_get">
+                        <field name="VAR" id="ai-object-location-x" variabletype="String">ai_object_location_x</field>
+                      </block>
+                    </value>
+                    <value name="POINTY">
+                      <block type="variables_get">
+                        <field name="VAR" id="ai-object-location-y" variabletype="String">ai_object_location_y</field>
+                      </block>
+                    </value>
+                    <value name="FONTSIZE">
+                      <shadow type="math_number">
+                        <field name="NUM">18</field>
+                      </shadow>
+                    </value>
+                    <value name="FILLCOLOR">
+                      <shadow type="text">
+                        <field name="TEXT">#FFFFFF</field>
+                      </shadow>
+                    </value>
+                    <value name="FILLOPACITY">
+                      <shadow type="math_number">
+                        <field name="NUM">1</field>
+                      </shadow>
+                    </value>
+                    <value name="TEXTVALUE">
+                      <block type="text_join">
+                        <mutation items="6" />
+                        <value name="ADD0">
+                          <block type="variables_get">
+                            <field name="VAR" id="ai-object-type" variabletype="String">ai_object_type</field>
+                          </block>
+                        </value>
+                        <value name="ADD1">
+                          <shadow type="text">
+                            <field name="TEXT"> | </field>
+                          </shadow>
+                        </value>
+                        <value name="ADD2">
+                          <block type="v7rc_math_function">
+                            <field name="TYPE">floor</field>
+                            <value name="x">
+                              <block type="math_arithmetic">
+                                <field name="OP">DIVIDE</field>
+                                <value name="A">
+                                  <block type="variables_get">
+                                    <field name="VAR" id="confidence-tenths">confidence_tenths</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <shadow type="math_number">
+                                    <field name="NUM">10</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="ADD3">
+                          <shadow type="text">
+                            <field name="TEXT">.</field>
+                          </shadow>
+                        </value>
+                        <value name="ADD4">
+                          <block type="math_modulo">
+                            <value name="DIVIDEND">
+                              <block type="variables_get">
+                                <field name="VAR" id="confidence-tenths">confidence_tenths</field>
+                              </block>
+                            </value>
+                            <value name="DIVISOR">
+                              <shadow type="math_number">
+                                <field name="NUM">10</field>
+                              </shadow>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="ADD5">
+                          <shadow type="text">
+                            <field name="TEXT">%</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_receive_ai_data" x="700" y="300">
+    <field name="1" id="aiData" variabletype="String">aiData</field>
+    <statement name="statement">
+      <block type="v7rc_clear_canvas_layer">
+        <value name="LAYERID">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="v7rc_paint_text">
+            <value name="LAYERID">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="POINTX">
+              <shadow type="math_number">
+                <field name="NUM">30</field>
+              </shadow>
+            </value>
+            <value name="POINTY">
+              <shadow type="math_number">
+                <field name="NUM">40</field>
+              </shadow>
+            </value>
+            <value name="FONTSIZE">
+              <shadow type="math_number">
+                <field name="NUM">22</field>
+              </shadow>
+            </value>
+            <value name="FILLCOLOR">
+              <shadow type="text">
+                <field name="TEXT">#FFDD33</field>
+              </shadow>
+            </value>
+            <value name="FILLOPACITY">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="TEXTVALUE">
+              <block type="text_join">
+                <mutation items="2" />
+                <value name="ADD0">
+                  <shadow type="text">
+                    <field name="TEXT">AI results: </field>
+                  </shadow>
+                </value>
+                <value name="ADD1">
+                  <block type="variables_get">
+                    <field name="VAR" id="ai-qty" variabletype="String">ai_qty</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="controls_if">
+                <value name="IF0">
+                  <block type="logic_compare">
+                    <field name="OP">EQ</field>
+                    <value name="A">
+                      <block type="variables_get">
+                        <field name="VAR" id="ai-qty" variabletype="String">ai_qty</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="v7rc_clear_canvas_layer">
+                    <value name="LAYERID">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

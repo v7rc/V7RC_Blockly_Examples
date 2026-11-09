@@ -15,3 +15,5 @@
 7. blockly_v7rc_lego_racing.xml： V7RC可以控制Legi科技系列車輛。
 
 8. blockly_robot_control.xml: 使用V7RC控制益成老師的機器人。
+
+9. [相機物件偵測](camera-object-detection/README.md)：使用 iOS V7RC App 的相機畫出物件框、名稱及一位小數的信心度百分比。內含正式 XML 與兩份診斷範例。
