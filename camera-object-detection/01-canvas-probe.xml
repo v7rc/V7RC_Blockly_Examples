@@ -1,0 +1,119 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="v7rc_setup" x="32" y="32">
+    <statement name="statement">
+      <block type="v7rc_show_canvas_layer">
+        <value name="LAYERID">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="v7rc_clear_canvas_layer">
+            <value name="LAYERID">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="v7rc_camera_enable">
+                <next>
+                  <block type="v7rc_paint_square">
+                    <value name="LAYERID">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                    <value name="POINTX">
+                      <shadow type="math_number">
+                        <field name="NUM">30</field>
+                      </shadow>
+                    </value>
+                    <value name="POINTY">
+                      <shadow type="math_number">
+                        <field name="NUM">40</field>
+                      </shadow>
+                    </value>
+                    <value name="WIDTH">
+                      <shadow type="math_number">
+                        <field name="NUM">160</field>
+                      </shadow>
+                    </value>
+                    <value name="HEIGHT">
+                      <shadow type="math_number">
+                        <field name="NUM">80</field>
+                      </shadow>
+                    </value>
+                    <value name="BORDERWIDTH">
+                      <shadow type="math_number">
+                        <field name="NUM">4</field>
+                      </shadow>
+                    </value>
+                    <value name="FILLOPACITY">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                    <value name="BORDEROPACITY">
+                      <shadow type="math_number">
+                        <field name="NUM">1</field>
+                      </shadow>
+                    </value>
+                    <value name="BORDERCOLOR">
+                      <shadow type="text">
+                        <field name="TEXT">#33FF66</field>
+                      </shadow>
+                    </value>
+                    <value name="FILLCOLOR">
+                      <shadow type="text">
+                        <field name="TEXT">#000000</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="v7rc_paint_text">
+                        <value name="LAYERID">
+                          <shadow type="math_number">
+                            <field name="NUM">0</field>
+                          </shadow>
+                        </value>
+                        <value name="POINTX">
+                          <shadow type="math_number">
+                            <field name="NUM">40</field>
+                          </shadow>
+                        </value>
+                        <value name="POINTY">
+                          <shadow type="math_number">
+                            <field name="NUM">65</field>
+                          </shadow>
+                        </value>
+                        <value name="FONTSIZE">
+                          <shadow type="math_number">
+                            <field name="NUM">22</field>
+                          </shadow>
+                        </value>
+                        <value name="FILLCOLOR">
+                          <shadow type="text">
+                            <field name="TEXT">#FFDD33</field>
+                          </shadow>
+                        </value>
+                        <value name="FILLOPACITY">
+                          <shadow type="math_number">
+                            <field name="NUM">1</field>
+                          </shadow>
+                        </value>
+                        <value name="TEXTVALUE">
+                          <shadow type="text">
+                            <field name="TEXT">Canvas 0 OK</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
