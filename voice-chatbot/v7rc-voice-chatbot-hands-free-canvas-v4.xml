@@ -1,0 +1,1291 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="phase">phase</variable>
+    <variable id="heard">heard</variable>
+    <variable id="snapshot">snapshot</variable>
+    <variable id="answer">answer</variable>
+    <variable id="recent">recent</variable>
+    <variable id="older">older</variable>
+    <variable id="voiceText" type="String">voiceText</variable>
+    <variable id="llm_feedback" type="String">llm_feedback</variable>
+    <variable id="sentence_queue">sentence_queue</variable>
+    <variable id="sentence">sentence</variable>
+    <variable id="character">character</variable>
+    <variable id="cursor">cursor</variable>
+    <variable id="spoken_sentence">spoken_sentence</variable>
+    <variable id="llm_ticks">llm_ticks</variable>
+    <variable id="finish_ticks">finish_ticks</variable>
+  </variables>
+  <block type="v7rc_setup" x="24" y="24">
+    <statement name="statement">
+      <block type="variables_set">
+        <field name="VAR" id="phase">phase</field>
+        <value name="VALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="variables_set">
+            <field name="VAR" id="recent">recent</field>
+            <value name="VALUE">
+              <shadow type="text">
+                <field name="TEXT" />
+              </shadow>
+            </value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR" id="older">older</field>
+                <value name="VALUE">
+                  <shadow type="text">
+                    <field name="TEXT" />
+                  </shadow>
+                </value>
+                <next>
+                  <block type="v7rc_llm_enable">
+                    <next>
+                      <block type="v7rc_llm_set_system_prompt">
+                        <value name="content">
+                          <shadow type="text">
+                            <field name="TEXT">你是繁體中文語音助理。請遵照本輪問題指定的句數回答。例如要求三句，就輸出三個各自完整的短句，每句分別以「。」結尾。若未指定句數，預設用一到兩句簡潔自然的話回答。把歷史問答當成對話背景，回答本輪問題。請勿輸出 Markdown。每句請用全形句號、問號或驚嘆號結尾。</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="v7rc_voice_recorder_enable">
+                            <field name="MODE">CONVERSATION_CANVAS</field>
+                            <next>
+                              <block type="v7rc_set_notice">
+                                <value name="NOTICETEXT">
+                                  <shadow type="text">
+                                    <field name="TEXT">自動對話 v4 Canvas 已就緒。點麥克風開始或暫停。</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_receive_voice_to_text" x="440" y="24">
+    <field name="1" id="voiceText" variabletype="String">voiceText</field>
+    <statement name="statement">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="logic_operation">
+            <field name="OP">OR</field>
+            <value name="A">
+              <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR" id="phase">phase</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <shadow type="math_number">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR" id="phase">phase</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <shadow type="math_number">
+                    <field name="NUM">1</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="variables_set">
+            <field name="VAR" id="heard">heard</field>
+            <value name="VALUE">
+              <block type="text_trim">
+                <field name="MODE">BOTH</field>
+                <value name="TEXT">
+                  <block type="variables_get">
+                    <field name="VAR" id="voiceText" variabletype="String">voiceText</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="controls_if">
+            <value name="IF0">
+              <block type="logic_operation">
+                <field name="OP">AND</field>
+                <value name="A">
+                  <block type="logic_compare">
+                    <field name="OP">EQ</field>
+                    <value name="A">
+                      <block type="variables_get">
+                        <field name="VAR" id="phase">phase</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="logic_compare">
+                    <field name="OP">NEQ</field>
+                    <value name="A">
+                      <block type="variables_get">
+                        <field name="VAR" id="heard">heard</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <shadow type="text">
+                        <field name="TEXT" />
+                      </shadow>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="variables_set">
+                <field name="VAR" id="phase">phase</field>
+                <value name="VALUE">
+                  <shadow type="math_number">
+                    <field name="NUM">1</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="controls_repeat_ext">
+                    <value name="TIMES">
+                      <shadow type="math_number">
+                        <field name="NUM">12</field>
+                      </shadow>
+                    </value>
+                    <statement name="DO">
+                      <block type="variables_set">
+                        <field name="VAR" id="snapshot">snapshot</field>
+                        <value name="VALUE">
+                          <block type="variables_get">
+                            <field name="VAR" id="heard">heard</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="v7rc_delay">
+                            <value name="DELAYTIME">
+                              <shadow type="math_number">
+                                <field name="NUM">1500</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="controls_if">
+                                <value name="IF0">
+                                  <block type="logic_compare">
+                                    <field name="OP">EQ</field>
+                                    <value name="A">
+                                      <block type="variables_get">
+                                        <field name="VAR" id="heard">heard</field>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="variables_get">
+                                        <field name="VAR" id="snapshot">snapshot</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <statement name="DO0">
+                                  <block type="controls_flow_statements">
+                                    <field name="FLOW">BREAK</field>
+                                  </block>
+                                </statement>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="v7rc_voice_recorder_disable">
+                        <next>
+                          <block type="controls_if">
+                            <value name="IF0">
+                              <block type="logic_compare">
+                                <field name="OP">NEQ</field>
+                                <value name="A">
+                                  <block type="variables_get">
+                                    <field name="VAR" id="heard">heard</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <shadow type="text">
+                                    <field name="TEXT" />
+                                  </shadow>
+                                </value>
+                              </block>
+                            </value>
+                            <statement name="DO0">
+                              <block type="controls_if">
+                                <mutation else="1" />
+                                <value name="IF0">
+                                  <block type="logic_operation">
+                                    <field name="OP">OR</field>
+                                    <value name="A">
+                                      <block type="logic_compare">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="variables_get">
+                                            <field name="VAR" id="heard">heard</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <shadow type="text">
+                                            <field name="TEXT">清除記憶</field>
+                                          </shadow>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="logic_compare">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="variables_get">
+                                            <field name="VAR" id="heard">heard</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <shadow type="text">
+                                            <field name="TEXT">清除記憶。</field>
+                                          </shadow>
+                                        </value>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <statement name="DO0">
+                                  <block type="variables_set">
+                                    <field name="VAR" id="recent">recent</field>
+                                    <value name="VALUE">
+                                      <shadow type="text">
+                                        <field name="TEXT" />
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set">
+                                        <field name="VAR" id="older">older</field>
+                                        <value name="VALUE">
+                                          <shadow type="text">
+                                            <field name="TEXT" />
+                                          </shadow>
+                                        </value>
+                                        <next>
+                                          <block type="v7rc_set_notice">
+                                            <value name="NOTICETEXT">
+                                              <shadow type="text">
+                                                <field name="TEXT">已清除對話記憶。</field>
+                                              </shadow>
+                                            </value>
+                                            <next>
+                                              <block type="v7rc_play_text_to_voice">
+                                                <value name="VALUE">
+                                                  <shadow type="text">
+                                                    <field name="TEXT">已清除對話記憶。</field>
+                                                  </shadow>
+                                                </value>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                                <statement name="ELSE">
+                                  <block type="variables_set">
+                                    <field name="VAR" id="answer">answer</field>
+                                    <value name="VALUE">
+                                      <shadow type="text">
+                                        <field name="TEXT" />
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set">
+                                        <field name="VAR" id="sentence">sentence</field>
+                                        <value name="VALUE">
+                                          <shadow type="text">
+                                            <field name="TEXT" />
+                                          </shadow>
+                                        </value>
+                                        <next>
+                                          <block type="variables_set">
+                                            <field name="VAR" id="cursor">cursor</field>
+                                            <value name="VALUE">
+                                              <shadow type="math_number">
+                                                <field name="NUM">1</field>
+                                              </shadow>
+                                            </value>
+                                            <next>
+                                              <block type="variables_set">
+                                                <field name="VAR" id="sentence_queue">sentence_queue</field>
+                                                <value name="VALUE">
+                                                  <block type="lists_create_with">
+                                                    <mutation items="0" />
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="variables_set">
+                                                    <field name="VAR" id="llm_ticks">llm_ticks</field>
+                                                    <value name="VALUE">
+                                                      <shadow type="math_number">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                    </value>
+                                                    <next>
+                                                      <block type="variables_set">
+                                                        <field name="VAR" id="finish_ticks">finish_ticks</field>
+                                                        <value name="VALUE">
+                                                          <shadow type="math_number">
+                                                            <field name="NUM">0</field>
+                                                          </shadow>
+                                                        </value>
+                                                        <next>
+                                                          <block type="variables_set">
+                                                            <field name="VAR" id="phase">phase</field>
+                                                            <value name="VALUE">
+                                                              <shadow type="math_number">
+                                                                <field name="NUM">2</field>
+                                                              </shadow>
+                                                            </value>
+                                                            <next>
+                                                              <block type="v7rc_set_notice">
+                                                                <value name="NOTICETEXT">
+                                                                  <block type="text_join">
+                                                                    <mutation items="3" />
+                                                                    <value name="ADD0">
+                                                                      <shadow type="text">
+                                                                        <field name="TEXT">你說：</field>
+                                                                      </shadow>
+                                                                    </value>
+                                                                    <value name="ADD1">
+                                                                      <block type="variables_get">
+                                                                        <field name="VAR" id="heard">heard</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="ADD2">
+                                                                      <shadow type="text">
+                                                                        <field name="TEXT">｜等待模型回答</field>
+                                                                      </shadow>
+                                                                    </value>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="v7rc_llm_request">
+                                                                    <value name="content">
+                                                                      <block type="text_join">
+                                                                        <mutation items="5" />
+                                                                        <value name="ADD0">
+                                                                          <shadow type="text">
+                                                                            <field name="TEXT">最近對話： </field>
+                                                                          </shadow>
+                                                                        </value>
+                                                                        <value name="ADD1">
+                                                                          <block type="variables_get">
+                                                                            <field name="VAR" id="older">older</field>
+                                                                          </block>
+                                                                        </value>
+                                                                        <value name="ADD2">
+                                                                          <block type="variables_get">
+                                                                            <field name="VAR" id="recent">recent</field>
+                                                                          </block>
+                                                                        </value>
+                                                                        <value name="ADD3">
+                                                                          <shadow type="text">
+                                                                            <field name="TEXT">｜本輪使用者問題：</field>
+                                                                          </shadow>
+                                                                        </value>
+                                                                        <value name="ADD4">
+                                                                          <block type="variables_get">
+                                                                            <field name="VAR" id="heard">heard</field>
+                                                                          </block>
+                                                                        </value>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="controls_whileUntil">
+                                                                        <field name="MODE">WHILE</field>
+                                                                        <value name="BOOL">
+                                                                          <block type="logic_boolean">
+                                                                            <field name="BOOL">TRUE</field>
+                                                                          </block>
+                                                                        </value>
+                                                                        <statement name="DO">
+                                                                          <block type="v7rc_delay">
+                                                                            <value name="DELAYTIME">
+                                                                              <shadow type="math_number">
+                                                                                <field name="NUM">250</field>
+                                                                              </shadow>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="controls_if">
+                                                                                <value name="IF0">
+                                                                                  <block type="logic_compare">
+                                                                                    <field name="OP">EQ</field>
+                                                                                    <value name="A">
+                                                                                      <block type="variables_get">
+                                                                                        <field name="VAR" id="phase">phase</field>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <value name="B">
+                                                                                      <shadow type="math_number">
+                                                                                        <field name="NUM">2</field>
+                                                                                      </shadow>
+                                                                                    </value>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <statement name="DO0">
+                                                                                  <block type="math_change">
+                                                                                    <field name="VAR" id="llm_ticks">llm_ticks</field>
+                                                                                    <value name="DELTA">
+                                                                                      <shadow type="math_number">
+                                                                                        <field name="NUM">1</field>
+                                                                                      </shadow>
+                                                                                    </value>
+                                                                                    <next>
+                                                                                      <block type="controls_if">
+                                                                                        <value name="IF0">
+                                                                                          <block type="logic_compare">
+                                                                                            <field name="OP">GTE</field>
+                                                                                            <value name="A">
+                                                                                              <block type="variables_get">
+                                                                                                <field name="VAR" id="llm_ticks">llm_ticks</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <value name="B">
+                                                                                              <shadow type="math_number">
+                                                                                                <field name="NUM">240</field>
+                                                                                              </shadow>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <statement name="DO0">
+                                                                                          <block type="variables_set">
+                                                                                            <field name="VAR" id="phase">phase</field>
+                                                                                            <value name="VALUE">
+                                                                                              <shadow type="math_number">
+                                                                                                <field name="NUM">4</field>
+                                                                                              </shadow>
+                                                                                            </value>
+                                                                                            <next>
+                                                                                              <block type="controls_flow_statements">
+                                                                                                <field name="FLOW">BREAK</field>
+                                                                                              </block>
+                                                                                            </next>
+                                                                                          </block>
+                                                                                        </statement>
+                                                                                        <next>
+                                                                                          <block type="controls_if">
+                                                                                            <value name="IF0">
+                                                                                              <block type="logic_operation">
+                                                                                                <field name="OP">AND</field>
+                                                                                                <value name="A">
+                                                                                                  <block type="logic_compare">
+                                                                                                    <field name="OP">EQ</field>
+                                                                                                    <value name="A">
+                                                                                                      <block type="math_modulo">
+                                                                                                        <value name="DIVIDEND">
+                                                                                                          <block type="variables_get">
+                                                                                                            <field name="VAR" id="llm_ticks">llm_ticks</field>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                        <value name="DIVISOR">
+                                                                                                          <shadow type="math_number">
+                                                                                                            <field name="NUM">4</field>
+                                                                                                          </shadow>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <value name="B">
+                                                                                                      <shadow type="math_number">
+                                                                                                        <field name="NUM">0</field>
+                                                                                                      </shadow>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="B">
+                                                                                                  <block type="logic_compare">
+                                                                                                    <field name="OP">NEQ</field>
+                                                                                                    <value name="A">
+                                                                                                      <block type="variables_get">
+                                                                                                        <field name="VAR" id="answer">answer</field>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <value name="B">
+                                                                                                      <shadow type="text">
+                                                                                                        <field name="TEXT" />
+                                                                                                      </shadow>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <statement name="DO0">
+                                                                                              <block type="v7rc_llm_check_if_completed" />
+                                                                                            </statement>
+                                                                                          </block>
+                                                                                        </next>
+                                                                                      </block>
+                                                                                    </next>
+                                                                                  </block>
+                                                                                </statement>
+                                                                                <next>
+                                                                                  <block type="controls_if">
+                                                                                    <value name="IF0">
+                                                                                      <block type="logic_compare">
+                                                                                        <field name="OP">EQ</field>
+                                                                                        <value name="A">
+                                                                                          <block type="variables_get">
+                                                                                            <field name="VAR" id="phase">phase</field>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <value name="B">
+                                                                                          <shadow type="math_number">
+                                                                                            <field name="NUM">3</field>
+                                                                                          </shadow>
+                                                                                        </value>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <statement name="DO0">
+                                                                                      <block type="math_change">
+                                                                                        <field name="VAR" id="finish_ticks">finish_ticks</field>
+                                                                                        <value name="DELTA">
+                                                                                          <shadow type="math_number">
+                                                                                            <field name="NUM">1</field>
+                                                                                          </shadow>
+                                                                                        </value>
+                                                                                        <next>
+                                                                                          <block type="controls_if">
+                                                                                            <value name="IF0">
+                                                                                              <block type="logic_compare">
+                                                                                                <field name="OP">GTE</field>
+                                                                                                <value name="A">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR" id="finish_ticks">finish_ticks</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="B">
+                                                                                                  <shadow type="math_number">
+                                                                                                    <field name="NUM">2</field>
+                                                                                                  </shadow>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <statement name="DO0">
+                                                                                              <block type="controls_if">
+                                                                                                <value name="IF0">
+                                                                                                  <block type="logic_operation">
+                                                                                                    <field name="OP">AND</field>
+                                                                                                    <value name="A">
+                                                                                                      <block type="logic_negate">
+                                                                                                        <value name="BOOL">
+                                                                                                          <block type="logic_compare">
+                                                                                                            <field name="OP">EQ</field>
+                                                                                                            <value name="A">
+                                                                                                              <block type="text_indexOf">
+                                                                                                                <field name="END">FIRST</field>
+                                                                                                                <value name="VALUE">
+                                                                                                                  <block type="variables_get">
+                                                                                                                    <field name="VAR" id="answer">answer</field>
+                                                                                                                  </block>
+                                                                                                                </value>
+                                                                                                                <value name="FIND">
+                                                                                                                  <shadow type="text">
+                                                                                                                    <field name="TEXT">Failed:</field>
+                                                                                                                  </shadow>
+                                                                                                                </value>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <value name="B">
+                                                                                                              <shadow type="math_number">
+                                                                                                                <field name="NUM">1</field>
+                                                                                                              </shadow>
+                                                                                                            </value>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <value name="B">
+                                                                                                      <block type="logic_compare">
+                                                                                                        <field name="OP">NEQ</field>
+                                                                                                        <value name="A">
+                                                                                                          <block type="text_trim">
+                                                                                                            <field name="MODE">BOTH</field>
+                                                                                                            <value name="TEXT">
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR" id="sentence">sentence</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                        <value name="B">
+                                                                                                          <shadow type="text">
+                                                                                                            <field name="TEXT" />
+                                                                                                          </shadow>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <statement name="DO0">
+                                                                                                  <block type="lists_setIndex">
+                                                                                                    <mutation at="false" />
+                                                                                                    <field name="MODE">INSERT</field>
+                                                                                                    <field name="WHERE">LAST</field>
+                                                                                                    <value name="LIST">
+                                                                                                      <block type="variables_get">
+                                                                                                        <field name="VAR" id="sentence_queue">sentence_queue</field>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <value name="TO">
+                                                                                                      <block type="text_trim">
+                                                                                                        <field name="MODE">BOTH</field>
+                                                                                                        <value name="TEXT">
+                                                                                                          <block type="variables_get">
+                                                                                                            <field name="VAR" id="sentence">sentence</field>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </statement>
+                                                                                                <next>
+                                                                                                  <block type="variables_set">
+                                                                                                    <field name="VAR" id="phase">phase</field>
+                                                                                                    <value name="VALUE">
+                                                                                                      <shadow type="math_number">
+                                                                                                        <field name="NUM">5</field>
+                                                                                                      </shadow>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </next>
+                                                                                              </block>
+                                                                                            </statement>
+                                                                                          </block>
+                                                                                        </next>
+                                                                                      </block>
+                                                                                    </statement>
+                                                                                    <next>
+                                                                                      <block type="controls_whileUntil">
+                                                                                        <field name="MODE">WHILE</field>
+                                                                                        <value name="BOOL">
+                                                                                          <block type="logic_compare">
+                                                                                            <field name="OP">GT</field>
+                                                                                            <value name="A">
+                                                                                              <block type="lists_length">
+                                                                                                <value name="VALUE">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR" id="sentence_queue">sentence_queue</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <value name="B">
+                                                                                              <shadow type="math_number">
+                                                                                                <field name="NUM">0</field>
+                                                                                              </shadow>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <statement name="DO">
+                                                                                          <block type="variables_set">
+                                                                                            <field name="VAR" id="spoken_sentence">spoken_sentence</field>
+                                                                                            <value name="VALUE">
+                                                                                              <block type="lists_getIndex">
+                                                                                                <mutation statement="false" at="false" />
+                                                                                                <field name="MODE">GET_REMOVE</field>
+                                                                                                <field name="WHERE">FIRST</field>
+                                                                                                <value name="VALUE">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR" id="sentence_queue">sentence_queue</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <next>
+                                                                                              <block type="v7rc_play_text_to_voice">
+                                                                                                <value name="VALUE">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR" id="spoken_sentence">spoken_sentence</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </next>
+                                                                                          </block>
+                                                                                        </statement>
+                                                                                        <next>
+                                                                                          <block type="controls_if">
+                                                                                            <value name="IF0">
+                                                                                              <block type="logic_compare">
+                                                                                                <field name="OP">EQ</field>
+                                                                                                <value name="A">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR" id="phase">phase</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="B">
+                                                                                                  <shadow type="math_number">
+                                                                                                    <field name="NUM">5</field>
+                                                                                                  </shadow>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <statement name="DO0">
+                                                                                              <block type="controls_flow_statements">
+                                                                                                <field name="FLOW">BREAK</field>
+                                                                                              </block>
+                                                                                            </statement>
+                                                                                          </block>
+                                                                                        </next>
+                                                                                      </block>
+                                                                                    </next>
+                                                                                  </block>
+                                                                                </next>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </statement>
+                                                                        <next>
+                                                                          <block type="controls_if">
+                                                                            <mutation else="1" />
+                                                                            <value name="IF0">
+                                                                              <block type="logic_compare">
+                                                                                <field name="OP">EQ</field>
+                                                                                <value name="A">
+                                                                                  <block type="variables_get">
+                                                                                    <field name="VAR" id="phase">phase</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <value name="B">
+                                                                                  <shadow type="math_number">
+                                                                                    <field name="NUM">5</field>
+                                                                                  </shadow>
+                                                                                </value>
+                                                                              </block>
+                                                                            </value>
+                                                                            <statement name="DO0">
+                                                                              <block type="controls_if">
+                                                                                <mutation else="1" />
+                                                                                <value name="IF0">
+                                                                                  <block type="logic_compare">
+                                                                                    <field name="OP">EQ</field>
+                                                                                    <value name="A">
+                                                                                      <block type="text_indexOf">
+                                                                                        <field name="END">FIRST</field>
+                                                                                        <value name="VALUE">
+                                                                                          <block type="variables_get">
+                                                                                            <field name="VAR" id="answer">answer</field>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <value name="FIND">
+                                                                                          <shadow type="text">
+                                                                                            <field name="TEXT">Failed:</field>
+                                                                                          </shadow>
+                                                                                        </value>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <value name="B">
+                                                                                      <shadow type="math_number">
+                                                                                        <field name="NUM">1</field>
+                                                                                      </shadow>
+                                                                                    </value>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <statement name="DO0">
+                                                                                  <block type="v7rc_set_notice">
+                                                                                    <value name="NOTICETEXT">
+                                                                                      <shadow type="text">
+                                                                                        <field name="TEXT">本機 LLM 回報推論錯誤，請確認模型。</field>
+                                                                                      </shadow>
+                                                                                    </value>
+                                                                                  </block>
+                                                                                </statement>
+                                                                                <statement name="ELSE">
+                                                                                  <block type="variables_set">
+                                                                                    <field name="VAR" id="older">older</field>
+                                                                                    <value name="VALUE">
+                                                                                      <block type="variables_get">
+                                                                                        <field name="VAR" id="recent">recent</field>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <next>
+                                                                                      <block type="variables_set">
+                                                                                        <field name="VAR" id="recent">recent</field>
+                                                                                        <value name="VALUE">
+                                                                                          <block type="text_join">
+                                                                                            <mutation items="5" />
+                                                                                            <value name="ADD0">
+                                                                                              <shadow type="text">
+                                                                                                <field name="TEXT">使用者：</field>
+                                                                                              </shadow>
+                                                                                            </value>
+                                                                                            <value name="ADD1">
+                                                                                              <block type="variables_get">
+                                                                                                <field name="VAR" id="heard">heard</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <value name="ADD2">
+                                                                                              <shadow type="text">
+                                                                                                <field name="TEXT">／助理：</field>
+                                                                                              </shadow>
+                                                                                            </value>
+                                                                                            <value name="ADD3">
+                                                                                              <block type="variables_get">
+                                                                                                <field name="VAR" id="answer">answer</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <value name="ADD4">
+                                                                                              <shadow type="text">
+                                                                                                <field name="TEXT"> ｜ </field>
+                                                                                              </shadow>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                      </block>
+                                                                                    </next>
+                                                                                  </block>
+                                                                                </statement>
+                                                                              </block>
+                                                                            </statement>
+                                                                            <statement name="ELSE">
+                                                                              <block type="v7rc_set_notice">
+                                                                                <value name="NOTICETEXT">
+                                                                                  <shadow type="text">
+                                                                                    <field name="TEXT">LLM 約 60 秒內未完成。</field>
+                                                                                  </shadow>
+                                                                                </value>
+                                                                              </block>
+                                                                            </statement>
+                                                                          </block>
+                                                                        </next>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </next>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                              </block>
+                            </statement>
+                            <next>
+                              <block type="variables_set">
+                                <field name="VAR" id="phase">phase</field>
+                                <value name="VALUE">
+                                  <shadow type="math_number">
+                                    <field name="NUM">0</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="v7rc_voice_recorder_enable" />
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="v7rc_llm_assistant_feedback" x="875" y="24">
+    <statement name="DO">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="logic_operation">
+            <field name="OP">OR</field>
+            <value name="A">
+              <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR" id="phase">phase</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <shadow type="math_number">
+                    <field name="NUM">2</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR" id="phase">phase</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <shadow type="math_number">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="controls_if">
+            <mutation else="1" />
+            <value name="IF0">
+              <block type="logic_compare">
+                <field name="OP">NEQ</field>
+                <value name="A">
+                  <block type="text_trim">
+                    <field name="MODE">BOTH</field>
+                    <value name="TEXT">
+                      <block type="variables_get">
+                        <field name="VAR" id="llm_feedback" variabletype="String">llm_feedback</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="B">
+                  <shadow type="text">
+                    <field name="TEXT" />
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="controls_if">
+                <value name="IF0">
+                  <block type="logic_compare">
+                    <field name="OP">GTE</field>
+                    <value name="A">
+                      <block type="text_length">
+                        <value name="VALUE">
+                          <block type="text_trim">
+                            <field name="MODE">BOTH</field>
+                            <value name="TEXT">
+                              <block type="variables_get">
+                                <field name="VAR" id="llm_feedback" variabletype="String">llm_feedback</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="text_length">
+                        <value name="VALUE">
+                          <block type="variables_get">
+                            <field name="VAR" id="answer">answer</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="variables_set">
+                    <field name="VAR" id="answer">answer</field>
+                    <value name="VALUE">
+                      <block type="text_trim">
+                        <field name="MODE">BOTH</field>
+                        <value name="TEXT">
+                          <block type="variables_get">
+                            <field name="VAR" id="llm_feedback" variabletype="String">llm_feedback</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="controls_if">
+                        <value name="IF0">
+                          <block type="logic_negate">
+                            <value name="BOOL">
+                              <block type="logic_compare">
+                                <field name="OP">EQ</field>
+                                <value name="A">
+                                  <block type="text_indexOf">
+                                    <field name="END">FIRST</field>
+                                    <value name="VALUE">
+                                      <block type="variables_get">
+                                        <field name="VAR" id="answer">answer</field>
+                                      </block>
+                                    </value>
+                                    <value name="FIND">
+                                      <shadow type="text">
+                                        <field name="TEXT">Failed:</field>
+                                      </shadow>
+                                    </value>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <shadow type="math_number">
+                                    <field name="NUM">1</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <block type="controls_whileUntil">
+                            <field name="MODE">WHILE</field>
+                            <value name="BOOL">
+                              <block type="logic_compare">
+                                <field name="OP">LTE</field>
+                                <value name="A">
+                                  <block type="variables_get">
+                                    <field name="VAR" id="cursor">cursor</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="text_length">
+                                    <value name="VALUE">
+                                      <block type="variables_get">
+                                        <field name="VAR" id="answer">answer</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <statement name="DO">
+                              <block type="variables_set">
+                                <field name="VAR" id="character">character</field>
+                                <value name="VALUE">
+                                  <block type="text_charAt">
+                                    <mutation at="true" />
+                                    <field name="WHERE">FROM_START</field>
+                                    <value name="VALUE">
+                                      <block type="variables_get">
+                                        <field name="VAR" id="answer">answer</field>
+                                      </block>
+                                    </value>
+                                    <value name="AT">
+                                      <block type="variables_get">
+                                        <field name="VAR" id="cursor">cursor</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="math_change">
+                                    <field name="VAR" id="cursor">cursor</field>
+                                    <value name="DELTA">
+                                      <shadow type="math_number">
+                                        <field name="NUM">1</field>
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set">
+                                        <field name="VAR" id="sentence">sentence</field>
+                                        <value name="VALUE">
+                                          <block type="text_join">
+                                            <mutation items="2" />
+                                            <value name="ADD0">
+                                              <block type="variables_get">
+                                                <field name="VAR" id="sentence">sentence</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD1">
+                                              <block type="variables_get">
+                                                <field name="VAR" id="character">character</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="controls_if">
+                                            <value name="IF0">
+                                              <block type="logic_compare">
+                                                <field name="OP">GT</field>
+                                                <value name="A">
+                                                  <block type="text_indexOf">
+                                                    <field name="END">FIRST</field>
+                                                    <value name="VALUE">
+                                                      <shadow type="text">
+                                                        <field name="TEXT">。！？!?</field>
+                                                      </shadow>
+                                                    </value>
+                                                    <value name="FIND">
+                                                      <block type="variables_get">
+                                                        <field name="VAR" id="character">character</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <shadow type="math_number">
+                                                    <field name="NUM">0</field>
+                                                  </shadow>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <statement name="DO0">
+                                              <block type="controls_if">
+                                                <value name="IF0">
+                                                  <block type="logic_compare">
+                                                    <field name="OP">NEQ</field>
+                                                    <value name="A">
+                                                      <block type="text_trim">
+                                                        <field name="MODE">BOTH</field>
+                                                        <value name="TEXT">
+                                                          <block type="variables_get">
+                                                            <field name="VAR" id="sentence">sentence</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="variables_get">
+                                                        <field name="VAR" id="character">character</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                  <block type="lists_setIndex">
+                                                    <mutation at="false" />
+                                                    <field name="MODE">INSERT</field>
+                                                    <field name="WHERE">LAST</field>
+                                                    <value name="LIST">
+                                                      <block type="variables_get">
+                                                        <field name="VAR" id="sentence_queue">sentence_queue</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="TO">
+                                                      <block type="text_trim">
+                                                        <field name="MODE">BOTH</field>
+                                                        <value name="TEXT">
+                                                          <block type="variables_get">
+                                                            <field name="VAR" id="sentence">sentence</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                                <next>
+                                                  <block type="variables_set">
+                                                    <field name="VAR" id="sentence">sentence</field>
+                                                    <value name="VALUE">
+                                                      <shadow type="text">
+                                                        <field name="TEXT" />
+                                                      </shadow>
+                                                    </value>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </statement>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </statement>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+            <statement name="ELSE">
+              <block type="controls_if">
+                <value name="IF0">
+                  <block type="logic_operation">
+                    <field name="OP">AND</field>
+                    <value name="A">
+                      <block type="logic_compare">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="variables_get">
+                            <field name="VAR" id="phase">phase</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <shadow type="math_number">
+                            <field name="NUM">2</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="logic_compare">
+                        <field name="OP">NEQ</field>
+                        <value name="A">
+                          <block type="variables_get">
+                            <field name="VAR" id="answer">answer</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <shadow type="text">
+                            <field name="TEXT" />
+                          </shadow>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="variables_set">
+                    <field name="VAR" id="phase">phase</field>
+                    <value name="VALUE">
+                      <shadow type="math_number">
+                        <field name="NUM">3</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

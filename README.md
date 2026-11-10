@@ -18,6 +18,8 @@
 
 9. [相機物件偵測](camera-object-detection/README.md)：使用 iOS V7RC App 的相機畫出物件框、名稱及一位小數的信心度百分比。內含正式 XML 與兩份診斷範例。
 
+10. [語音對話 v3／Canvas v4](voice-chatbot/README.md)：逐句朗讀，播完自動恢復收音。Canvas v4 將字幕繪製在畫布上並在朗讀結束後清除。
+
 ## 使用 Codex 生成 V7RC Blockly XML
 
 `v7rc-blockly-xml` Skill 會查閱 [V7RC Blockly 開發者文件](https://blocky.v7rc.io/docs/) 和 [線上積木型錄](https://blocky.v7rc.io/docs/block-catalog.json)，依照公開規格生成或修改可匯入的工作區 XML。
@@ -44,3 +46,13 @@ $v7rc-blockly-xml 幫我生成 canvas-hello.xml。
 ```
 
 在 [V7RC Blockly 編輯器](https://blocky.v7rc.io/) 使用「匯入」選擇 `canvas-hello.xml`，確認初始化積木已載入。要看原生畫布效果，請在支援 Blockly 繪圖的 V7RC App 執行。
+
+
+### 上傳到指定裝置
+
+```text
+$v7rc-blockly-xml 請把剛驗證完成的 XML 上傳到我的 V7RC 裝置。
+Device ID：<你的 Device ID>
+```
+
+也可以提供含 `id` 的完整編輯器網址。未指定目標時，Skill 會請你提供 Device ID。上傳前會備份現有工作區，上傳後會讀回比對。Device ID 同時用作目前的儲存憑證，請避免公開分享。

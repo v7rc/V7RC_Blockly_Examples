@@ -17,3 +17,8 @@
 ## Microduck
 
 - Use the camera callback to verify image capture before adding image AI or SRT motion. The App bridge, model service, and robot or simulator can fail independently. Verify the requested control profile and timing in the target environment. Keep simulator navigation results separate from physical-device acceptance.
+
+
+## iOS 語音對話
+
+The public 1.1.0 catalog has no `MODE` field on `v7rc_voice_recorder_enable`. When targeting a compatible iOS test build, use the shipped [v3 and Canvas v4 examples](../../../../voice-chatbot/README.md) as editor-verified references for `CONVERSATION` and `CONVERSATION_CANVAS`. Older editor exports can drop the field. Preserve it during upload and validate against the target App’s bundled editor.
