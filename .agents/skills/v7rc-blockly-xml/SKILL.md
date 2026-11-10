@@ -1,0 +1,15 @@
+---
+name: v7rc-blockly-xml
+description: Create, edit, review, or validate importable V7RC Blockly workspace XML. Use for V7RC camera, object detection, drawing, sensors, control, or Microduck Blockly examples when the deliverable is a Blockly XML workspace.
+---
+
+# V7RC Blockly XML
+
+Use the [public developer documentation](https://blocky.v7rc.io/docs/) for the authoring workflow and official XML examples. Read the [live block catalog](https://blocky.v7rc.io/docs/block-catalog.json) for block IDs, field names, option values, input names, and connections. Read the catalog's actual `catalogVersion`, `blocklyVersion`, and `editorCommit` and record them when reporting validation. This workflow was checked against catalog 1.1.0. If the published catalog cannot be fetched, use an explicitly available versioned copy and identify its source and version.
+
+1. Establish the target editor and any required App platform or version. Use the catalog's stable identifiers, including exact case. Entries marked `importable` can be loaded from XML even when absent from the fixed toolbox. For dynamic blocks, use a matching exported example to confirm mutations and sockets. Use internal blocks only when the target editor explicitly supports them for the intended use.
+2. Generate a complete workspace with `<xml xmlns="https://developers.google.com/blockly/xml">`. Use `field` for options, `value` for expressions or shadows, `statement` for command stacks, and `next` for sequencing. Declare referenced variables with matching IDs and types. Start initialization with `v7rc_setup`; place native event handlers at the top level where documented. For camera, detection, and native runtime details, read [runtime notes](references/runtime.md).
+3. Parse the XML and compare all block and shadow types, fields, option values, inputs, and variable references against the catalog or a target-editor export. When the editor is available, import, export, re-import, and generate JavaScript to verify that the workspace survives the round trip. Use an isolated test device ID and mocked save/API and native bridges if using the editor's Run button, which attempts to save the workspace. Do not execute or upload an XML program to a live device without the user's authorization.
+4. Deliver the XML with any required App setup and state which checks actually passed. Report editor import/export and JavaScript generation separately from App or simulator execution. If only XML checks were possible, identify the remaining validation.
+
+Use the [official drawing example](https://blocky.v7rc.io/docs/examples/batch-drawing.xml) for list mutations and native drawing, the [ArUco example](https://blocky.v7rc.io/docs/examples/aruco-marker.xml) for top-level callbacks, and the [camera maze example](https://blocky.v7rc.io/docs/examples/maze-from-camera.xml) for camera-based asynchronous processing. The [OpenAPI document](https://blocky.v7rc.io/docs/openapi.yaml) describes a proposed API. Use the editor's XML import/export workflow for generation and validation unless a real API endpoint has been independently established.
