@@ -16,6 +16,8 @@ This repository contains programming examples for V7RC Blockly.
 - [`camera-object-detection/README.md`](camera-object-detection/README.md) · Camera object detection with bounding boxes, labels and confidence percentages to one decimal place
 - [`voice-chatbot/README.md`](voice-chatbot/README.md) · Voice chat v3 and Canvas v4 with sentence-by-sentence speech and automatic microphone resumption. Canvas v4 draws and clears subtitles on the canvas
 
+- [Tap-to-select person-following camera v7](person-follow-camera/README.md) · Pan/tilt control on CH1/CH2, tap a person to switch targets, and Canvas overlays with tracking and channel diagnostics. Requires the model label「人」and a compatible iOS app.
+
 ## Generate Blockly XML with Codex
 
 ```sh

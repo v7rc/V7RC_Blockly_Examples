@@ -22,6 +22,8 @@
 
 10. [語音對話 v3／Canvas v4](voice-chatbot/README.md)：逐句朗讀，播完自動恢復收音。Canvas v4 將字幕繪製在畫布上並在朗讀結束後清除。
 
+11. [點選人物跟拍雲台 v7](person-follow-camera/README.md)：偵測「人」並控制 CH1／CH2，點擊人物框更換追蹤目標，Canvas 顯示綠色人物框、粗紅色追蹤框及通道數值。
+
 ## 使用 Codex 生成 V7RC Blockly XML
 
 `v7rc-blockly-xml` Skill 會查閱 [V7RC Blockly 開發者文件](https://blocky.v7rc.io/docs/) 和 [線上積木型錄](https://blocky.v7rc.io/docs/block-catalog.json)，依照公開規格生成或修改可匯入的工作區 XML。

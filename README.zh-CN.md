@@ -16,6 +16,8 @@
 - [`camera-object-detection/README.md`](camera-object-detection/README.md) · 相机物体检测，显示物体框、名称和保留一位小数的置信度百分比
 - [`voice-chatbot/README.md`](voice-chatbot/README.md) · 语音对话 v3／Canvas v4，逐句朗读，播放完毕后恢复录音，Canvas v4 在画布上显示并清除字幕
 
+- [点选人物跟拍云台 v7](person-follow-camera/README.md) · 检测「人」并控制 CH1／CH2，点击人物框切换目标，显示检测框、追踪框及通道数值。
+
 ## 使用 Codex 生成 Blockly XML
 
 ```sh

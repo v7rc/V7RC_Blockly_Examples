@@ -16,6 +16,8 @@ V7RC Blockly のプログラミングサンプル集です。
 - [`camera-object-detection/README.md`](camera-object-detection/README.md) · カメラで物体を検出し、枠、名前、信頼度を小数第1位までのパーセントで表示
 - [`voice-chatbot/README.md`](voice-chatbot/README.md) · 音声対話 v3 と Canvas v4。文ごとに読み上げ、終了後に録音を再開。Canvas v4 では字幕をキャンバスに描画し、読み上げ後に消去
 
+- [タップで追跡対象を選ぶカメラ雲台 v7](person-follow-camera/README.md) · CH1／CH2 で左右・上下を制御し、人物枠のタップで対象を変更。検出枠、追跡枠とチャンネル値を表示。「人」ラベルのモデルと対応する iOS アプリが必要です。
+
 ## Codex で Blockly XML を生成
 
 ```sh
