@@ -58,3 +58,7 @@ Device ID：<你的 Device ID>
 ```
 
 也可以提供含 `id` 的完整編輯器網址。未指定目標時，Skill 會請你提供 Device ID。上傳前會備份現有工作區，上傳後會讀回比對。Device ID 同時用作目前的儲存憑證，請避免公開分享。
+
+## 使用 Claude Code
+
+在倉庫根目錄執行 `claude`，再輸入 `/v7rc-blockly-xml` 加上需求。Claude Code 會從專案入口載入與 Codex 共用的指引和上傳腳本。 [`.claude/skills/v7rc-blockly-xml/`](.claude/skills/v7rc-blockly-xml/)

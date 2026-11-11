@@ -40,3 +40,7 @@ $v7rc-blockly-xml 请上传已验证的 XML。Device ID 为 <你的 Device ID>�
 ```
 
 也可提供包含 id 的完整编辑器网址。Skill 会备份现有工作区，并在上传后读回比对。请勿公开分享 Device ID。
+
+## 使用 Claude Code
+
+在仓库根目录运行 `claude`，然后输入 `/v7rc-blockly-xml` 和你的需求。Claude Code 会通过项目入口加载与 Codex 共用的指南和上传脚本。 [`.claude/skills/v7rc-blockly-xml/`](.claude/skills/v7rc-blockly-xml/)

@@ -40,3 +40,7 @@ $v7rc-blockly-xml 検証済みの XML を Device ID <お使いの Device ID> に
 ```
 
 id を含むエディターの URL も指定できます。スキルは既存のワークスペースをバックアップし、アップロード後に読み戻して確認します。Device ID は公開しないでください。
+
+## Claude Code で使う
+
+リポジトリのルートで `claude` を実行し、`/v7rc-blockly-xml` に続けて依頼を入力します。プロジェクトのエントリーポイントから、Codex と共通の手順とアップロードスクリプトを読み込みます。 [`.claude/skills/v7rc-blockly-xml/`](.claude/skills/v7rc-blockly-xml/)

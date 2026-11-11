@@ -40,3 +40,7 @@ $v7rc-blockly-xml Upload the validated XML to Device ID <your Device ID>.
 ```
 
 You can also provide the full editor URL containing the id. The skill backs up the existing workspace and verifies the upload by reading it back. Keep your Device ID private.
+
+## Use with Claude Code
+
+Run `claude` from the repository root, then enter `/v7rc-blockly-xml` followed by your request. The project entry point loads the same instructions and upload script used by Codex. [`.claude/skills/v7rc-blockly-xml/`](.claude/skills/v7rc-blockly-xml/)
