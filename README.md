@@ -1,5 +1,7 @@
 # V7RC_Blockly_Examples
 
+[繁體中文](README.md) · [简体中文](README.zh-CN.md) · [English](README.en.md) · [日本語](README.ja.md)
+
 這個Repository主要存放V7RC Blocky程式設計的功能範例，提供給V7RC的愛好者參考。
 
 1. blockly_translation.xml: 使用手機的麥克風去進行中翻英，顯示在畫面。
